@@ -19,3 +19,16 @@ footer {
   padding: 1rem;
   margin-top: 2rem;
 }
+section {
+  margin-bottom: 2rem;
+}
+h2 {
+  color: #66fcf1;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  padding: 0.5rem 0;
+}
