@@ -115,6 +115,12 @@ footer {
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
+/* 🔥 Glow effect for nav clicks */
+.pulse-highlight {
+  box-shadow: 0 0 25px 10px #66fcf1;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
 @media (max-width: 600px) {
   .header-content h1 {
     font-size: 2.2rem;
