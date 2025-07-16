@@ -1,44 +1,76 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #0b0c10;
-  color: #ffffff;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #000;
+  color: #fff;
+  scroll-behavior: smooth;
 }
 
-header {
-  background: #1f2833;
-  padding: 2rem;
+.navbar {
+  position: sticky;
+  top: 0;
+  background: #111;
+  padding: 10px 20px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #ddd;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #0ff;
+}
+
+.hero {
+  height: 100vh;
+  background: url('space-bg.mp4') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
 }
 
-main {
-  padding: 2rem;
+.hero h1 {
+  font-size: 4rem;
+  letter-spacing: 2px;
 }
 
-footer {
-  background: #1f2833;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-
-.section-title {
-  color: #66fcf1;
-}
-
-.team-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.team-list li {
-  margin-bottom: 0.75rem;
-  transition: all 0.3s ease-in-out;
-}
-
-.team-list li:hover {
-  color: #66fcf1;
-  transform: scale(1.05);
+.btn {
+  background: #0ff;
+  color: #000;
+  padding: 10px 20px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
   cursor: pointer;
+}
+
+.section {
+  padding: 80px 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
 }
