@@ -140,27 +140,6 @@ footer {
   transition: box-shadow 0.3s ease-in-out;
 }
 
-.countdown-display {
-  font-size: 2rem;
-  margin-top: 1rem;
-  color: #66fcf1;
-  font-weight: bold;
-  text-shadow: 0 0 5px #45a29e;
-}
-
-.roadmap-list {
-  list-style: none;
-  padding-left: 0;
-  line-height: 2;
-  font-size: 1.1rem;
-  color: #cccccc;
-}
-
-.roadmap-list li::before {
-  content: "• ";
-  color: #66fcf1;
-}
-
 .telemetry-list {
   list-style: none;
   padding: 0;
@@ -172,6 +151,40 @@ footer {
 .telemetry-list li::before {
   content: "► ";
   color: #66fcf1;
+}
+
+.roadmap-list {
+  list-style: none;
+  padding-left: 0;
+  line-height: 2;
+}
+
+.roadmap-list li::before {
+  content: "🚀 ";
+  color: #66fcf1;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.shop-item {
+  background: #1f2833;
+  border: 1px solid #66fcf1;
+  padding: 2rem;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #66fcf1;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
+}
+
+.shop-item.placeholder {
+  opacity: 0.5;
+  font-style: italic;
 }
 
 @media (max-width: 600px) {
