@@ -24,7 +24,8 @@ function createStars(count) {
 }
 
 function drawStars() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'white';
   stars.forEach(star => {
     ctx.globalAlpha = star.alpha;
