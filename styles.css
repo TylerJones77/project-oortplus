@@ -136,7 +136,7 @@ footer {
 }
 
 .pulse-highlight {
-  box-shadow: 0 0 12px 4px #66fcf1;
+  box-shadow: 0 0 8px 2px #66fcf1;
   transition: box-shadow 0.3s ease-in-out;
 }
 
