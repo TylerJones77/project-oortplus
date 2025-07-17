@@ -63,23 +63,31 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Telemetry panel (static + randomized temp)
+// Telemetry (demo mode)
 function updateTelemetry() {
-  const statusEl = document.getElementById("status");
-  const distanceEl = document.getElementById("distance");
-  const velocityEl = document.getElementById("velocity");
-  const powerEl = document.getElementById("power");
-  const tempEl = document.getElementById("temperature");
-  const aiEl = document.getElementById("ai");
-  const delayEl = document.getElementById("delay");
-
-  statusEl.textContent = "Standby";
-  distanceEl.textContent = "0.00 AU";
-  velocityEl.textContent = "0.00 km/s";
-  powerEl.textContent = "100%";
-  tempEl.textContent = `-${(55 + Math.random()).toFixed(1)}°C`;
-  aiEl.textContent = "Idle";
-  delayEl.textContent = "0.00 s";
+  document.getElementById("status").textContent = "Standby";
+  document.getElementById("distance").textContent = "0.00 AU";
+  document.getElementById("velocity").textContent = "0.00 km/s";
+  document.getElementById("power").textContent = "100%";
+  document.getElementById("temperature").textContent = `-${(55 + Math.random()).toFixed(1)}°C`;
+  document.getElementById("ai").textContent = "Idle";
+  document.getElementById("delay").textContent = "0.00 s";
 }
 setInterval(updateTelemetry, 3000);
 updateTelemetry();
+
+// Fade-in on scroll
+const faders = document.querySelectorAll('.fade-in');
+
+function showOnScroll() {
+  faders.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.style.opacity = 1;
+      el.style.transform = 'translateY(0)';
+    }
+  });
+}
+
+window.addEventListener('scroll', showOnScroll);
+window.addEventListener('load', showOnScroll);
