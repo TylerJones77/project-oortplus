@@ -2,15 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Oort+</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- ✨ Starfield canvas background -->
   <canvas id="starfield"></canvas>
 
   <nav class="navbar">
@@ -18,37 +14,35 @@
       <li><a href="#mission">Mission</a></li>
       <li><a href="#vision">Vision</a></li>
       <li><a href="#team">Team</a></li>
+      <li><a href="#countdown">Countdown</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
     </ul>
   </nav>
 
   <header class="video-header">
-    <video autoplay muted loop playsinline class="bg-video">
-      <source src="space-bg.mp4" type="video/mp4" />
+    <video autoplay muted loop class="bg-video">
+      <source src="background.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
     <div class="header-content">
-      <img src="oort-probe.png" alt="Project Oort+ Probe" class="header-image" />
+      <img src="oort-probe.png" alt="Oort Probe" class="header-image" />
       <h1>Project Oort+</h1>
       <p class="quote">"The future doesn’t belong to those who wait. It belongs to those who dare to go further." – Tyler Jones</p>
     </div>
   </header>
 
   <main>
-    <section id="mission" class="section fade-in">
+    <section id="mission" class="section">
       <h2 class="section-title">Mission</h2>
       <p>To send humanity’s deepest message and explore the outermost edge of our solar system—the Oort Cloud.</p>
-      <button class="toggle-btn">More Info</button>
-      <div class="extra-content hidden">
-        <p>Voyager 3 will be equipped with AI navigation, fusion propulsion, and humanity’s cultural archive onboard.</p>
-      </div>
     </section>
 
-    <section id="vision" class="section fade-in">
+    <section id="vision" class="section">
       <h2 class="section-title">Vision</h2>
       <p>Unite science, art, and culture in a space mission that outlives generations and inspires the world.</p>
     </section>
 
-    <section id="team" class="section fade-in">
+    <section id="team" class="section">
       <h2 class="section-title">Team</h2>
       <ul class="team-list">
         <li><strong>Tyler Jones</strong> — Founder & Mission Architect</li>
@@ -56,10 +50,29 @@
         <li><strong>Tyler Jones</strong> — Lead Engineer</li>
       </ul>
     </section>
+
+    <section id="countdown" class="section">
+      <h2 class="section-title">Countdown to Launch</h2>
+      <p id="launch-timer" class="countdown-display">Calculating...</p>
+    </section>
+
+    <section id="roadmap" class="section">
+      <h2 class="section-title">Mission Roadmap</h2>
+      <ul class="roadmap-list">
+        <li><strong>2025:</strong> Public launch + digital platform (in progress)</li>
+        <li><strong>2026:</strong> Initial grant funding + partnerships</li>
+        <li><strong>2028:</strong> Engineering & systems modeling underway</li>
+        <li><strong>2030:</strong> Working AI + power systems prototyped</li>
+        <li><strong>2035:</strong> Final build + launch prep</li>
+        <li><strong>2036:</strong> 🚀 LAUNCH</li>
+      </ul>
+    </section>
   </main>
 
   <footer>
-    <p>Contact us: <a href="mailto:oortplus@space.org">oortplus@space.org</a></p>
+    <p>Contact us: oortplus@space.org</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
