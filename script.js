@@ -25,7 +25,7 @@ function createStars(count) {
 
 function drawStars() {
   // Clear canvas slightly for trailing effect
-  ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw static stars
