@@ -1,4 +1,4 @@
-// Starfield animation (you likely already have this)
+// Starfield animation
 const canvas = document.getElementById("starfield");
 const ctx = canvas.getContext("2d");
 
@@ -60,6 +60,26 @@ function updateCountdown() {
   document.getElementById("launch-timer").innerHTML =
     `${years} years and ${remainingDays} days to go`;
 }
-
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Telemetry panel (static + randomized temp)
+function updateTelemetry() {
+  const statusEl = document.getElementById("status");
+  const distanceEl = document.getElementById("distance");
+  const velocityEl = document.getElementById("velocity");
+  const powerEl = document.getElementById("power");
+  const tempEl = document.getElementById("temperature");
+  const aiEl = document.getElementById("ai");
+  const delayEl = document.getElementById("delay");
+
+  statusEl.textContent = "Standby";
+  distanceEl.textContent = "0.00 AU";
+  velocityEl.textContent = "0.00 km/s";
+  powerEl.textContent = "100%";
+  tempEl.textContent = `-${(55 + Math.random()).toFixed(1)}°C`;
+  aiEl.textContent = "Idle";
+  delayEl.textContent = "0.00 s";
+}
+setInterval(updateTelemetry, 3000);
+updateTelemetry();
