@@ -15,9 +15,6 @@ body {
   z-index: -2;
   background: transparent;
   pointer-events: none;
-  canvas#starfield {
-  border: 3px solid red;
-}
 }
 
 .navbar {
