@@ -149,20 +149,4 @@ footer {
 }
 
 .roadmap-list {
-  list-style: none;
-  padding-left: 0;
-  line-height: 2;
-  font-size: 1.1rem;
-  color: #cccccc;
-}
-
-.roadmap-list li::before {
-  content: "• ";
-  color: #66fcf1;
-}
-
-@media (max-width: 600px) {
-  .header-content h1 {
-    font-size: 2.2rem;
-  }
-}
+  list-sty
