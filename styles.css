@@ -77,6 +77,15 @@ body {
   margin-bottom: 1rem;
 }
 
+.header-image {
+  max-width: 300px;
+  width: 80%;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+}
+
 .quote {
   font-style: italic;
   margin-top: 1rem;
