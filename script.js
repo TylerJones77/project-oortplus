@@ -24,21 +24,25 @@ function createStars(count) {
 }
 
 function drawStars() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'white';
+  // Clear canvas slightly for trailing effect
+  ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw static stars
   stars.forEach(star => {
     ctx.globalAlpha = star.alpha;
     ctx.beginPath();
     ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = "white";
     ctx.fill();
+
     star.y += star.speed;
     if (star.y > canvas.height) star.y = 0;
   });
+
   ctx.globalAlpha = 1;
 }
 
-// 🌠 Create a shooting star
 function createShootingStar() {
   const startX = Math.random() * canvas.width;
   const startY = Math.random() * canvas.height * 0.5;
@@ -53,7 +57,6 @@ function createShootingStar() {
   });
 }
 
-// 🎯 Draw shooting stars
 function drawShootingStars() {
   for (let i = 0; i < shootingStars.length; i++) {
     const star = shootingStars[i];
@@ -89,7 +92,7 @@ function animate() {
 createStars(200);
 animate();
 
-// 🌠 Generate a new shooting star every 3–6 seconds
+// Generate a new shooting star every 3–6 seconds
 setInterval(() => {
   createShootingStar();
 }, 3000 + Math.random() * 3000);
