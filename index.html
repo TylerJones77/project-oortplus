@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Project Oort+</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
   <canvas id="starfield"></canvas>
 
   <nav class="navbar">
@@ -16,87 +17,60 @@
       <li><a href="#team">Team</a></li>
       <li><a href="#countdown">Countdown</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
-      <li><a href="#shop">Shop</a></li> <!-- New button -->
+      <li><a href="#shop">Shop</a></li>
     </ul>
   </nav>
 
   <header class="video-header">
-    <video autoplay muted loop class="bg-video">
-      <source src="background.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
     <div class="header-content">
-      <img src="oort-probe.png" alt="Oort Probe" class="header-image" />
+      <img src="oort-probe.png" alt="Project Oort+ Probe" class="header-image">
       <h1>Project Oort+</h1>
       <p class="quote">"The future doesn’t belong to those who wait. It belongs to those who dare to go further." – Tyler Jones</p>
     </div>
   </header>
 
-  <main>
-    <section id="mission" class="section fade-in">
-      <h2 class="section-title">Mission</h2>
-      <p>To send humanity’s deepest message and explore the outermost edge of our solar system—the Oort Cloud.</p>
-    </section>
+  <section id="mission" class="section">
+    <h2 class="section-title">Mission</h2>
+    <p>To send humanity's message and technology to the edge of the Solar System and beyond.</p>
+  </section>
 
-    <section id="vision" class="section fade-in">
-      <h2 class="section-title">Vision</h2>
-      <p>Unite science, art, and culture in a space mission that outlives generations and inspires the world.</p>
-    </section>
+  <section id="vision" class="section">
+    <h2 class="section-title">Vision</h2>
+    <p>Unite engineering, science, and culture into one generational journey to the Oort Cloud.</p>
+  </section>
 
-    <section id="team" class="section fade-in">
-      <h2 class="section-title">Team</h2>
-      <ul class="team-list">
-        <li><strong>Tyler Jones</strong> — Founder & Mission Architect</li>
-        <li><strong>Mia Furman & Haidyn Jones</strong> — Creative Director</li>
-        <li><strong>Tyler Jones</strong> — Lead Engineer</li>
-      </ul>
-    </section>
+  <section id="team" class="section">
+    <h2 class="section-title">Team</h2>
+    <ul class="team-list">
+      <li>Tyler Jones — Founder</li>
+      <!-- Add more team members here -->
+    </ul>
+  </section>
 
-    <section id="countdown" class="section fade-in">
-      <h2 class="section-title">Countdown to Launch</h2>
-      <p id="launch-timer" class="countdown-display pulse-highlight">Calculating...</p>
-    </section>
+  <section id="countdown" class="section">
+    <h2 class="section-title">Launch Countdown: 2036</h2>
+    <div id="countdown-timer"></div>
+  </section>
 
-    <section id="telemetry" class="section fade-in">
-      <h2 class="section-title">Live Telemetry</h2>
-      <ul class="telemetry-list">
-        <li><strong>Status:</strong> <span id="status" class="pulse-highlight">Standby</span></li>
-        <li><strong>Distance from Earth:</strong> <span id="distance" class="pulse-highlight">0.00 AU</span></li>
-        <li><strong>Velocity:</strong> <span id="velocity" class="pulse-highlight">0.00 km/s</span></li>
-        <li><strong>Power System:</strong> <span id="power" class="pulse-highlight">100%</span></li>
-        <li><strong>Internal Temp:</strong> <span id="temperature" class="pulse-highlight">-55.0°C</span></li>
-        <li><strong>Core AI:</strong> <span id="ai" class="pulse-highlight">Idle</span></li>
-        <li><strong>Signal Delay:</strong> <span id="delay" class="pulse-highlight">0.00 s</span></li>
-      </ul>
-    </section>
+  <section id="roadmap" class="section">
+    <h2 class="section-title">Roadmap</h2>
+    <ul class="team-list">
+      <li><strong>2025</strong> — Public launch + digital platform (in progress)</li>
+      <li><strong>2026</strong> — Initial grant funding + partnerships</li>
+      <li><strong>2028</strong> — Engineering & systems modeling underway</li>
+      <li><strong>2030</strong> — Working AI + power systems prototyped</li>
+      <li><strong>2035</strong> — Final build + launch prep</li>
+      <li><strong>2036</strong> — 🚀 LAUNCH</li>
+    </ul>
+  </section>
 
-    <section id="roadmap" class="section fade-in">
-      <h2 class="section-title">Mission Roadmap</h2>
-      <ul class="roadmap-list">
-        <li><strong>2025:</strong> Public launch + digital platform (in progress)</li>
-        <li><strong>2026:</strong> Initial grant funding + partnerships</li>
-        <li><strong>2028:</strong> Engineering & systems modeling underway</li>
-        <li><strong>2030:</strong> Working AI + power systems prototyped</li>
-        <li><strong>2035:</strong> Final build + launch prep</li>
-        <li><strong>2036-2040:</strong> 🚀 CRITICAL LAUNCH WINDOW</li>
-      </ul>
-    </section>
-
-    <!-- ✅ New Shop Section -->
-    <section id="shop" class="section fade-in">
-      <h2 class="section-title">Oort+ Shop (Coming Soon)</h2>
-      <div class="shop-grid">
-        <div class="shop-item placeholder">👕 Shirts</div>
-        <div class="shop-item placeholder">🧢 Hats</div>
-        <div class="shop-item placeholder">🧥 Hoodies</div>
-        <div class="shop-item placeholder">👖 Pants</div>
-      </div>
-      <p style="margin-top: 1rem;">Explore exclusive gear when the collection drops.</p>
-    </section>
-  </main>
+  <section id="shop" class="section">
+    <h2 class="section-title">Shop</h2>
+    <p>Soon you'll be able to buy shirts, hats, hoodies, and pants here.</p>
+  </section>
 
   <footer>
-    <p>Contact us: oortplus@space.org</p>
+    &copy; 2025 Project Oort+. All rights reserved.
   </footer>
 
   <script src="script.js"></script>
