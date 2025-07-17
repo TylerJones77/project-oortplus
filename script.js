@@ -1,82 +1,65 @@
-// Scroll animation
-gsap.registerPlugin(ScrollTrigger);
+// Starfield animation (you likely already have this)
+const canvas = document.getElementById("starfield");
+const ctx = canvas.getContext("2d");
 
-gsap.utils.toArray('.fade-in').forEach(section => {
-  gsap.to(section, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 80%',
-    }
-  });
-});
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-// Toggle extra content
-document.querySelectorAll('.toggle-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    const content = button.nextElementSibling;
-    content.classList.toggle('hidden');
-    button.textContent = content.classList.contains('hidden') ? 'More Info' : 'Less Info';
-  });
-});
-
-// Glow effect when nav links are clicked
-document.querySelectorAll('.navbar a').forEach(link => {
-  link.addEventListener('click', e => {
-    const targetId = link.getAttribute('href').substring(1);
-    const target = document.getElementById(targetId);
-    if (target) {
-      target.classList.add('pulse-highlight');
-      setTimeout(() => target.classList.remove('pulse-highlight'), 1000);
-    }
-  });
-});
-
-// Starfield animation
-const canvas = document.getElementById('starfield');
-const ctx = canvas.getContext('2d');
 let stars = [];
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+for (let i = 0; i < 150; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5,
+    d: Math.random() * 0.5 + 0.2,
+  });
 }
 
-function createStars(count) {
-  stars = [];
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5,
-      velocity: Math.random() * 0.5 + 0.1
-    });
-  }
-}
-
-function animateStars() {
+function drawStars() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'white';
-  for (let star of stars) {
+  ctx.fillStyle = "#ffffff";
+  stars.forEach((star) => {
     ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
     ctx.fill();
-    star.y += star.velocity;
+  });
+}
+
+function updateStars() {
+  stars.forEach((star) => {
+    star.y += star.d;
     if (star.y > canvas.height) {
       star.y = 0;
       star.x = Math.random() * canvas.width;
     }
-  }
-  requestAnimationFrame(animateStars);
+  });
 }
 
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  createStars(200);
-});
+function animate() {
+  drawStars();
+  updateStars();
+  requestAnimationFrame(animate);
+}
+animate();
 
-resizeCanvas();
-createStars(200);
-animateStars();
+// Countdown clock
+function updateCountdown() {
+  const launchDate = new Date("January 1, 2036 00:00:00").getTime();
+  const now = new Date().getTime();
+  const distance = launchDate - now;
+
+  if (distance < 0) {
+    document.getElementById("launch-timer").innerHTML = "🚀 Launched!";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const years = Math.floor(days / 365);
+  const remainingDays = days % 365;
+
+  document.getElementById("launch-timer").innerHTML =
+    `${years} years and ${remainingDays} days to go`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
