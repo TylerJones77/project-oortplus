@@ -47,8 +47,8 @@
       <h2 class="section-title">Team</h2>
       <ul class="team-list">
         <li><strong>Tyler Jones</strong> — Founder & Mission Architect</li>
-        <li><strong>Mia Furman & Haidyn Jones</strong> — Creative Director</li>
-        <li><strong>Tyler Jones</strong> — Lead Engineer</li>
+        <li><strong>Ava Martinez</strong> — Creative Director</li>
+        <li><strong>Jordan Lin</strong> — Lead Engineer</li>
       </ul>
     </section>
 
@@ -82,40 +82,35 @@
       </ul>
     </section>
 
-    <!-- ✅ Shop Section -->
+    <!-- 🛍️ SHOP SECTION WITH TABS -->
     <section id="shop" class="section fade-in">
       <h2 class="section-title">Oort+ Shop (Coming Soon)</h2>
-      <div class="shop-grid">
-        <a href="#shirts" class="shop-item placeholder">👕 Shirts</a>
-        <a href="#hats" class="shop-item placeholder">🧢 Hats</a>
-        <a href="#hoodies" class="shop-item placeholder">🧥 Hoodies</a>
-        <a href="#pants" class="shop-item placeholder">👖 Pants</a>
+      <div class="shop-tabs">
+        <button class="shop-tab" onclick="showTab('shirts')">👕 Shirts</button>
+        <button class="shop-tab" onclick="showTab('hats')">🧢 Hats</button>
+        <button class="shop-tab" onclick="showTab('hoodies')">🧥 Hoodies</button>
+        <button class="shop-tab" onclick="showTab('pants')">👖 Pants</button>
       </div>
-      <p style="margin-top: 1rem;">Explore exclusive gear when the collection drops.</p>
-    </section>
 
-    <!-- 🧵 Shirts Section -->
-    <section id="shirts" class="section fade-in">
-      <h2 class="section-title">Oort+ Shirts</h2>
-      <p>Details about Oort+ shirts will go here.</p>
-    </section>
+      <div class="shop-content" id="shirts">
+        <div class="shop-item placeholder">Shirt #1</div>
+        <div class="shop-item placeholder">Shirt #2</div>
+      </div>
 
-    <!-- 🧢 Hats Section -->
-    <section id="hats" class="section fade-in">
-      <h2 class="section-title">Oort+ Hats</h2>
-      <p>Details about Oort+ hats will go here.</p>
-    </section>
+      <div class="shop-content hidden" id="hats">
+        <div class="shop-item placeholder">Hat #1</div>
+        <div class="shop-item placeholder">Hat #2</div>
+      </div>
 
-    <!-- 🧥 Hoodies Section -->
-    <section id="hoodies" class="section fade-in">
-      <h2 class="section-title">Oort+ Hoodies</h2>
-      <p>Details about Oort+ hoodies will go here.</p>
-    </section>
+      <div class="shop-content hidden" id="hoodies">
+        <div class="shop-item placeholder">Hoodie #1</div>
+        <div class="shop-item placeholder">Hoodie #2</div>
+      </div>
 
-    <!-- 👖 Pants Section -->
-    <section id="pants" class="section fade-in">
-      <h2 class="section-title">Oort+ Pants</h2>
-      <p>Details about Oort+ pants will go here.</p>
+      <div class="shop-content hidden" id="pants">
+        <div class="shop-item placeholder">Pants #1</div>
+        <div class="shop-item placeholder">Pants #2</div>
+      </div>
     </section>
   </main>
 
