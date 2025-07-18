@@ -194,6 +194,52 @@ footer {
   font-style: italic;
 }
 
+/* 🛰️ Oort+ Tracker Styles */
+.tracker-container {
+  margin: 2rem auto;
+  max-width: 600px;
+  position: relative;
+  height: 40px;
+}
+
+.tracker-line {
+  height: 4px;
+  background: #66fcf1;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.tracker-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #66fcf1;
+  padding-top: 10px;
+}
+
+.tracker-dot {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: 2px solid #66fcf1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: moveDot 20s linear infinite;
+  box-shadow: 0 0 10px #66fcf1;
+}
+
+@keyframes moveDot {
+  0% { left: 0%; }
+  100% { left: 100%; }
+}
+
 @media (max-width: 600px) {
   .header-content h1 {
     font-size: 2.2rem;
