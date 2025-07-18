@@ -91,3 +91,27 @@ function showOnScroll() {
 
 window.addEventListener('scroll', showOnScroll);
 window.addEventListener('load', showOnScroll);
+
+// Tabbed Shop Switching
+const tabs = document.querySelectorAll(".shop-tab");
+const contents = document.querySelectorAll(".shop-tab-content");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    // Remove 'active' class from all tabs and contents
+    tabs.forEach(t => t.classList.remove("active"));
+    contents.forEach(c => c.classList.remove("active"));
+
+    // Add 'active' class to clicked tab and matching content
+    tab.classList.add("active");
+    const target = document.getElementById(tab.dataset.target);
+    if (target) {
+      target.classList.add("active");
+    }
+  });
+});
+
+// Auto-activate the first tab
+if (tabs.length > 0) {
+  tabs[0].click();
+}
