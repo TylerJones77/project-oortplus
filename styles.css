@@ -196,43 +196,46 @@ footer {
 
 /* 🛰️ Oort+ Tracker Styles */
 .tracker-container {
-  margin: 2rem auto;
-  max-width: 600px;
   position: relative;
-  height: 40px;
+  margin: 4rem auto;
+  max-width: 800px;
+  height: 80px;
 }
 
 .tracker-line {
-  height: 4px;
-  background: #66fcf1;
   position: absolute;
   top: 50%;
   left: 0;
-  right: 0;
+  width: 100%;
+  height: 4px;
+  background: #66fcf1;
   transform: translateY(-50%);
-  border-radius: 2px;
-}
-
-.tracker-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #66fcf1;
-  padding-top: 10px;
+  z-index: 1;
 }
 
 .tracker-dot {
   position: absolute;
   top: 50%;
-  left: 0%;
-  width: 14px;
-  height: 14px;
-  background: #ffffff;
-  border: 2px solid #66fcf1;
+  left: 50%; /* Simulated middle position */
+  width: 20px;
+  height: 20px;
+  background: #66fcf1;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  animation: moveDot 20s linear infinite;
-  box-shadow: 0 0 10px #66fcf1;
+  box-shadow: 0 0 20px #66fcf1;
+  z-index: 2;
+}
+
+.tracker-labels.above {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #66fcf1;
+  pointer-events: none;
 }
 
 @keyframes moveDot {
