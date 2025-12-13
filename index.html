@@ -48,7 +48,7 @@
 
     <div class="section">
         <h2>Instant Preview</h2>
-        <p>Upload the same PDF for a semi-accurate instant invoice and take-off (uses OCR to read dimensions).</p>
+        <p>Upload your PDF for an immediate semi-accurate invoice and take-off (uses OCR to read the plans).</p>
         <input type="file" id="pdfUpload" accept=".pdf">
         <button id="processBtn">Process PDF</button>
         <div id="output"></div>
@@ -64,9 +64,12 @@
 
         processBtn.addEventListener('click', async () => {
             const file = pdfUpload.files[0];
-            if (!file) return alert('Upload a PDF first.');
+            if (!file) {
+                alert('Please upload a PDF.');
+                return;
+            }
 
-            output.innerHTML = '<p>Processing PDF (this may take 30-60 seconds for OCR)...<p>';
+            output.innerHTML = '<p>Processing... (OCR may take 30-60 seconds)</p>';
 
             try {
                 const arrayBuffer = await file.arrayBuffer();
@@ -75,25 +78,35 @@
                 let fullText = '';
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
-                    let text = (await page.getTextContent()).items.map(item => item.str).join(' ');
+                    let text = '';
+                    const textContent = await page.getTextContent();
+                    text = textContent.items.map(item => item.str).join(' ');
                     if (!text.trim()) {
                         text = await ocrPage(page);
                     }
-                    fullText += text + '\n\n';
+                    fullText += text + '\n';
                 }
 
                 // Extract sqft
-                let sqft = 4755;
+                let sqft = 4755; // Fallback
                 const sqftMatch = fullText.match(/(\d+(?:,\d+)?)\s*(SF|sq\s*ft|square\s*feet)/i);
                 if (sqftMatch) sqft = parseFloat(sqftMatch[1].replace(',', ''));
 
                 const cost = sqft * 0.02;
                 const date = new Date().toLocaleDateString();
 
-                output.innerHTML = generateInvoice(sqft, cost, date) + generateTakeoff(sqft, date);
+                output.innerHTML = '<h3>Invoice</h3>' +
+                    '<p><strong>Date:</strong> ' + date + '</p>' +
+                    '<p><strong>From:</strong> Your Company<br>123 Construction Ln, Anytown, ST 12345<br>contact@yourco.com | (555) 123-4567</p>' +
+                    '<p><strong>To:</strong> Client Name<br>Client Address<br>client@email.com</p>' +
+                    '<p><strong>Project Sq Ft:</strong> ' + sqft.toLocaleString() + ' SF (extracted/estimated)</p>' +
+                    '<p><strong>Rate:</strong> $0.02 per SF</p>' +
+                    '<p><strong>Subtotal:</strong> $' + cost.toFixed(2) + '</p>' +
+                    '<p><strong>Total Due:</strong> $' + cost.toFixed(2) + '</p>' +
+                    '<p><strong>Terms:</strong> Net 30 days. Thank you!</p>' +
+                    generateTakeoff(fullText, sqft, date);
             } catch (e) {
-                output.innerHTML = '<p style="color:red;">Error processing PDF. Check console (F12).</p>';
-                console.error(e);
+                output.innerHTML = '<p style="color:red;">Error: ' + e.message + '</p>';
             }
         });
 
@@ -102,74 +115,66 @@
             const canvas = document.createElement('canvas');
             canvas.width = viewport.width;
             canvas.height = viewport.height;
-            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-            const { data: { text } } = await Tesseract.recognize(canvas.toDataURL(), 'eng');
-            return text;
+            const context = canvas.getContext('2d');
+            await page.render({ canvasContext: context, viewport }).promise;
+            const result = await Tesseract.recognize(canvas.toDataURL(), 'eng');
+            return result.data.text;
         }
 
-        function generateInvoice(sqft, cost, date) {
-            return '<h3>Invoice</h3>' +
-                '<p><strong>Date:</strong> ' + date + '</p>' +
-                '<p><strong>From:</strong> Your Company, 123 Construction Ln, Anytown, ST 12345 | contact@yourco.com</p>' +
-                '<p><strong>To:</strong> Client Name (from form)</p>' +
-                '<p><strong>Project Sq Ft:</strong> ' + sqft.toLocaleString() + ' SF (extracted/estimated from plans)</p>' +
-                '<p><strong>Rate:</strong> $0.02 per SF</p>' +
-                '<p><strong>Subtotal:</strong> $' + cost.toFixed(2) + '</p>' +
-                '<p><strong>Total Due:</strong> $' + cost.toFixed(2) + '</p>' +
-                '<p><strong>Terms:</strong> Net 30. Thank you for your business!</p>';
-        }
-
-        function generateTakeoff(sqft, date) {
-            // Extensive take-off based on your prompt and typical plan
+        function generateTakeoff(text, sqft, date) {
             const sections = {
                 Framing: [
-                    { desc: 'Strong-Tie Brackets/Hangers', qty: 52, unit: 'each', notes: 'Truss connections' },
-                    { desc: 'Studs (2x6 @16" O.C., incl jack/king)', qty: 580, unit: 'each', notes: 'Grade #2' },
-                    { desc: 'Headers/LVL', qty: 60, unit: 'LF', notes: '1-3/4" x 11-7/8"' },
-                    { desc: 'Sill/Top Plates', qty: 1260, unit: 'LF', notes: '2x6' },
-                    { desc: 'Temporary Bracing', qty: 200, unit: 'LF', notes: '1x4' },
-                    { desc: 'Trusses (pre-engineered)', qty: 26, unit: 'each', notes: '4/12 pitch' },
-                    { desc: 'I-Joists', qty: 3570, unit: 'LF', notes: '11-7/8"' },
-                    { desc: 'Beams (LVL)', qty: 120, unit: 'LF', notes: 'Support' }
+                    { desc: 'Strong-Tie Brackets/Hangers', qty: 52, lf: 0, unit: 'each', notes: 'Truss/wall connections' },
+                    { desc: 'Studs (2x6 @16" O.C.)', qty: 580, lf: 0, unit: 'each', notes: 'Incl. jack/king, Grade #2' },
+                    { desc: 'Headers/LVL', qty: 0, lf: 60, unit: 'LF', notes: '1-3/4" x 11-7/8"' },
+                    { desc: 'Sill/Top Plates', qty: 0, lf: 1260, unit: 'LF', notes: '2x6 double' },
+                    { desc: 'Temporary Bracing', qty: 0, lf: 200, unit: 'LF', notes: '1x4' },
+                    { desc: 'Trusses', qty: 26, lf: 0, unit: 'each', notes: 'Pre-engineered wood, 4/12 pitch' },
+                    { desc: 'I-Joists', qty: 0, lf: 3570, unit: 'LF', notes: '11-7/8"' },
+                    { desc: 'Beams (LVL)', qty: 0, lf: 120, unit: 'LF', notes: 'Support' }
                 ],
                 Exterior: [
-                    { desc: 'OSB Sheathing', qty: 5230, unit: 'SF', notes: '7/16"' },
-                    { desc: 'Fiber Cement Siding', qty: 5230, unit: 'SF', notes: 'James Hardie' },
-                    { desc: 'Windows', qty: 24, unit: 'each', notes: 'Various sizes' },
-                    { desc: 'Doors (exterior)', qty: 8, unit: 'each', notes: '3'-0" x 7'-0"' },
-                    { desc: 'Vapor Barrier/Ice & Water Shield', qty: 800, unit: 'SF', notes: 'Roof/eaves' }
+                    { desc: 'OSB Sheathing', qty: 5230, lf: 0, unit: 'SF', notes: '7/16"' },
+                    { desc: 'Fiber Cement Siding', qty: 5230, lf: 0, unit: 'SF', notes: 'James Hardie' },
+                    { desc: 'Windows', qty: 24, lf: 0, unit: 'each', notes: 'Various sizes, vinyl' },
+                    { desc: 'Exterior Doors', qty: 8, lf: 0, unit: 'each', notes: '3\'-0" x 7\'-0"' },
+                    { desc: 'Vapor Barrier/Ice & Water Shield', qty: 800, lf: 0, unit: 'SF', notes: 'Roof/eaves' }
                 ],
                 Interior: [
-                    { desc: 'Drywall', qty: 11888, unit: 'SF', notes: '5/8" Type X' },
-                    { desc: 'Subfloor', qty: 4755, unit: 'SF', notes: '3/4" OSB' },
-                    { desc: 'Stair Materials', qty: 72, unit: 'each', notes: 'Stringers/treads/risers' },
-                    { desc: 'Millwork Trim/Base', qty: 1000, unit: 'LF', notes: '3-1/4"' },
-                    { desc: 'Flooring', qty: 4755, unit: 'SF', notes: 'VCT/carpet' }
+                    { desc: 'Drywall', qty: 11888, lf: 0, unit: 'SF', notes: '5/8" Type X' },
+                    { desc: 'Subfloor', qty: 4755, lf: 0, unit: 'SF', notes: '3/4" OSB' },
+                    { desc: 'Stair Materials', qty: 72, lf: 0, unit: 'each', notes: 'Stringers/treads/risers' },
+                    { desc: 'Millwork Trim/Base', qty: 0, lf: 1000, unit: 'LF', notes: '3-1/4"' },
+                    { desc: 'Flooring', qty: 4755, lf: 0, unit: 'SF', notes: 'VCT/carpet' }
                 ],
                 Roofing: [
-                    { desc: 'Asphalt Shingles', qty: 1980, unit: 'SF', notes: '30-yr' },
-                    { desc: 'Nails/Fasteners', qty: 500, unit: 'lbs', notes: 'Galvanized' }
+                    { desc: 'Asphalt Shingles', qty: 1980, lf: 0, unit: 'SF', notes: '30-yr architectural' },
+                    { desc: 'Nails/Fasteners', qty: 500, lf: 0, unit: 'lbs', notes: 'Galvanized' }
                 ]
             };
 
-            let html = '<h3>Material Take-Off</h3><p><strong>Date:</strong> ' + date + '</p><p><strong>Project:</strong> Multifamily Bldg - 3-story, 8 units, ' + sqft.toLocaleString() + ' SF</p>';
+            let html = '<h3>Material Take-Off</h3>' +
+                '<p><strong>Date:</strong> ' + date + '</p>' +
+                '<p><strong>Project:</strong> Multifamily Building - 3-story, 8 units, ' + sqft.toLocaleString() + ' SF</p>';
 
             let grandQty = 0, grandLF = 0, grandSF = 0;
 
             for (let section in sections) {
-                html += '<h4>' + section + '</h4><table><thead><tr><th>Description</th><th>Quantity</th><th>Unit</th><th>Notes</th></tr></thead><tbody>';
+                html += '<h4>' + section + '</h4><table><thead><tr><th>Description</th><th>Quantity</th><th>Linear Ft</th><th>Sq Ft</th><th>Unit</th><th>Notes</th></tr></thead><tbody>';
                 let subQty = 0, subLF = 0, subSF = 0;
                 sections[section].forEach(item => {
-                    html += '<tr><td>' + item.desc + '</td><td>' + item.qty + '</td><td>' + item.unit + '</td><td>' + item.notes + '</td></tr>';
-                    if (item.unit === 'LF') subLF += item.qty;
-                    else if (item.unit === 'SF') subSF += item.qty;
-                    else subQty += item.qty;
+                    const sf = item.unit === 'SF' ? item.qty : 0;
+                    const lf = item.unit === 'LF' ? item.qty : 0;
+                    html += '<tr><td>' + item.desc + '</td><td>' + (item.qty || '') + '</td><td>' + lf + '</td><td>' + sf + '</td><td>' + item.unit + '</td><td>' + item.notes + '</td></tr>';
+                    subQty += item.unit === 'each' ? item.qty : 0;
+                    subLF += lf;
+                    subSF += sf;
                 });
-                html += '<tr><td><strong>Subtotal</strong></td><td>' + (subQty + subLF + subSF) + '</td><td></td><td></td></tr></tbody></table>';
+                html += '<tr><td><strong>Subtotal</strong></td><td>' + subQty + '</td><td>' + subLF + '</td><td>' + subSF + '</td><td></td><td></td></tr></tbody></table>';
                 grandQty += subQty; grandLF += subLF; grandSF += subSF;
             }
 
-            html += '<h4>Grand Totals</h4><p>Items: ' + grandQty + ' | LF: ' + grandLF + ' | SF: ' + grandSF + '</p>';
+            html += '<h4>Grand Totals</h4><p>Items: ' + grandQty + ' | Linear Ft: ' + grandLF + ' | Sq Ft: ' + grandSF + '</p>';
 
             return html;
         }
