@@ -3,189 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Professional Material Take-Off</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Submit Structural Plans for Take-Off</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 40px auto;
-            max-width: 800px;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        p {
-            text-align: center;
-            font-size: 1.1em;
-            color: #555;
-        }
-
-        label {
-            display: block;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type="file"] {
-            margin-top: 10px;
-        }
-
-        button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 30px;
-            background: #0066ff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0055cc;
-        }
-
-        .alternative {
-            text-align: center;
-            margin-top: 40px;
-            font-style: italic;
-            color: #666;
-        }
-
-        /* Sword fighters background (kept from before) */
-        .swordfighter {
-            position: fixed;
-            bottom: 50px;
-            width: 150px;
-            height: 300px;
-            opacity: 0.6;
-            z-index: -1;
-            animation: battle 8s infinite ease-in-out;
-        }
-
-        .swordfighter.left { left: 100px; animation-delay: 0s; transform: scaleX(-1); }
-        .swordfighter.center { left: 50%; transform: translateX(-50%); animation-delay: 2s; }
-        .swordfighter.right { right: 100px; animation-delay: 4s; }
-
-        .swordfighter::before { content: ''; position: absolute; top: 0; left: 60px; width: 30px; height: 30px; border: 6px solid #fff; border-radius: 50%; box-shadow: 0 0 10px red; }
-        .swordfighter::after { content: ''; position: absolute; top: 36px; left: 72px; width: 6px; height: 120px; background: #fff; }
-
-        .arm, .leg { position: absolute; width: 8px; height: 100px; background: #fff; transform-origin: top center; }
-        .arm-left { top: 40px; left: 50px; animation: slash 2s infinite ease-in-out; }
-        .arm-right { top: 40px; left: 92px; animation: slash 2s infinite ease-in-out 0.5s; }
-        .leg-left { top: 150px; left: 64px; animation: kick 2s infinite ease-in-out 1s; }
-        .leg-right { top: 150px; left: 80px; animation: kick 2s infinite ease-in-out 1.5s; }
-
-        .sword {
-            position: absolute;
-            top: 100px;
-            left: 100px;
-            width: 12px;
-            height: 150px;
-            background: linear-gradient(to bottom, #00f, #0ff, #00f);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 0 0 20px #0ff, 0 0 40px #00f;
-            transform: rotate(-45deg);
-            animation: flame 0.5s infinite alternate, swingSword 2s infinite ease-in-out;
-        }
-
-        @keyframes slash { 0%, 100% { transform: rotate(45deg); } 50% { transform: rotate(-90deg); } }
-        @keyframes kick { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(60deg); } }
-        @keyframes flame { 0% { box-shadow: 0 0 20px #0ff, 0 0 40px #00f; } 100% { box-shadow: 0 0 30px #0ff, 0 0 60px #00f; } }
-        @keyframes swingSword { 0%, 100% { transform: rotate(-45deg); } 50% { transform: rotate(-120deg); } }
-        @keyframes battle { 0%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(-30px) rotate(10deg); } 50% { transform: translateY(20px) rotate(-10deg); } 75% { transform: translateY(-30px) rotate(10deg); } }
-
-        .blood { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, red, darkred); border-radius: 50%; opacity: 0; animation: splatter 2s infinite; }
-        .blood1 { top: 100px; left: 80px; animation-delay: 0.5s; }
-        .blood2 { top: 120px; left: 100px; animation-delay: 1s; }
-        .blood3 { top: 140px; left: 60px; animation-delay: 1.5s; }
-        @keyframes splatter { 0% { opacity: 0; transform: scale(0); } 20% { opacity: 0.8; transform: scale(2); } 100% { opacity: 0; transform: scale(3); } }
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        form { display: flex; flex-direction: column; }
+        label { margin-top: 10px; }
+        input, textarea, button { margin-top: 5px; padding: 8px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
-    <!-- Sword fighters -->
-    <div class="swordfighter left">
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="leg leg-left"></div>
-        <div class="leg leg-right"></div>
-        <div class="sword"></div>
-        <div class="blood blood1"></div>
-        <div class="blood blood2"></div>
-    </div>
-    <div class="swordfighter center">
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="leg leg-left"></div>
-        <div class="leg leg-right"></div>
-        <div class="sword"></div>
-        <div class="blood blood1"></div>
-        <div class="blood blood3"></div>
-    </div>
-    <div class="swordfighter right">
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="leg leg-left"></div>
-        <div class="leg leg-right"></div>
-        <div class="sword"></div>
-        <div class="blood blood2"></div>
-        <div class="blood blood3"></div>
-    </div>
-
     <h1>Request Professional Material Take-Off</h1>
     <p>Submit your structural plans PDF, and we'll perform a comprehensive take-off and email it back. For high-volume bidding (up to 500,000 sq ft/day), expect processing within 24 hours.</p>
-
-    <form action="https://formsubmit.co/your@email.com" method="POST" enctype="multipart/form-data" target="_blank">
+   
+    <form action="https://formsubmit.co/your@email.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="New Structural Plans Submission for Take-Off">
+        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- Replace with your thank-you page URL -->
+        <input type="hidden" name="_captcha" value="true"> <!-- Enables CAPTCHA for security -->
+       
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
-
+       
         <label for="email">Your Email:</label>
         <input type="email" id="email" name="email" required>
-
+       
         <label for="phone">Your Phone (optional):</label>
         <input type="tel" id="phone" name="phone">
-
-        <label for="description">Project Description (optional):</label>
-        <textarea id="description" name="description" rows="4"></textarea>
-
-        <label for="pdf">Upload Structural Plans (PDF):</label>
-        <input type="file" id="pdf" name="attachment" accept=".pdf" required>
-
-        <!-- Hidden FormSubmit settings -->
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html"> <!-- Optional custom thank-you page -->
-        <input type="hidden" name="_subject" value="New Take-Off Request">
-
+       
+        <label for="project">Project Description (optional):</label>
+        <textarea id="project" name="project" rows="4"></textarea>
+       
+        <label for="plans">Upload Structural Plans (PDF):</label>
+        <input type="file" id="plans" name="attachment" accept=".pdf" required>
+       
         <button type="submit">Submit Plans</button>
     </form>
-
-    <p class="alternative">Alternatively, for instant processing, attach your PDF directly to Grok with the provided prompt.</p>
-
-    <!-- Your instant client-side processor (kept from before) -->
-    <script type="module">
-        // ... (the full PDF processing script from our last working version)
-        // Paste the <script type="module"> block from the previous full code here if you still want instant local processing
-    </script>
+   
+    <p>Alternatively, for instant processing, attach your PDF directly to Grok with the provided prompt.</p>
 </body>
 </html>
