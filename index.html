@@ -5,8 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construction Plan Processor</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Dancing Stick Figures Background */
+        body {
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .stickman {
+            position: fixed;
+            bottom: 20px;
+            width: 60px;
+            height: 120px;
+            opacity: 0.3; /* Semi-transparent so they don't distract */
+            z-index: -1;
+            animation: dance 4s infinite ease-in-out;
+        }
+
+        .stickman.left { left: 50px; }
+        .stickman.center { left: 50%; transform: translateX(-50%); bottom: 50px; }
+        .stickman.right { right: 50px; animation-delay: 1s; }
+
+        /* Stick figure parts (simple lines) */
+        .stickman::before { /* Head */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            border: 4px solid #333;
+            border-radius: 50%;
+        }
+
+        .stickman::after { /* Body */
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 28px;
+            width: 4px;
+            height: 50px;
+            background: #333;
+        }
+
+        .arm-left, .arm-right, .leg-left, .leg-right {
+            position: absolute;
+            width: 4px;
+            height: 40px;
+            background: #333;
+            transform-origin: top center;
+        }
+
+        .arm-left { top: 30px; left: 20px; transform: rotate(30deg); }
+        .arm-right { top: 30px; left: 36px; transform: rotate(-30deg); }
+        .leg-left { top: 70px; left: 24px; transform: rotate(-20deg); }
+        .leg-right { top: 70px; left: 32px; transform: rotate(20deg); }
+
+        /* Dance animation - arms and legs swing */
+        @keyframes dance {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(10px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+        }
+
+        .arm-left, .arm-right, .leg-left, .leg-right {
+            animation: swing 2s infinite ease-in-out;
+        }
+
+        .arm-left { animation-delay: 0s; }
+        .arm-right { animation-delay: 0.5s; }
+        .leg-left { animation-delay: 1s; }
+        .leg-right { animation-delay: 1.5s; }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(30deg); }
+            50% { transform: rotate(-30deg); }
+        }
+
+        .arm-right, .leg-right { transform: rotate(-30deg); } /* Starting opposite */
+        @keyframes swing {
+            0%, 100% { transform: rotate(-30deg); }
+            50% { transform: rotate(30deg); }
+        }
+    </style>
 </head>
 <body>
+    <!-- Dancing stick figures -->
+    <div class="stickman left">
+        <div class="arm-left"></div>
+        <div class="arm-right"></div>
+        <div class="leg-left"></div>
+        <div class="leg-right"></div>
+    </div>
+    <div class="stickman center">
+        <div class="arm-left"></div>
+        <div class="arm-right"></div>
+        <div class="leg-left"></div>
+        <div class="leg-right"></div>
+    </div>
+    <div class="stickman right">
+        <div class="arm-left"></div>
+        <div class="arm-right"></div>
+        <div class="leg-left"></div>
+        <div class="leg-right"></div>
+    </div>
+
     <h1>Upload Structural Plan PDF</h1>
     <input type="file" id="pdfUpload" accept=".pdf">
     <button id="processBtn">Process PDF</button>
@@ -47,16 +160,15 @@
                     fullText += 'Page ' + pageNum + ': ' + pageText + '\n\n';
                 }
 
-                let sqft = 4755; // Accurate fallback from PDF analysis: ~1,585 SF per floor x 3 stories
+                let sqft = 4755;
                 if (fullText.trim()) {
                     const sqftMatch = fullText.match(/\b(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:SF|sq\.?\s*ft|square\s*feet|Area)\b/i);
                     if (sqftMatch) sqft = parseFloat(sqftMatch[1].replace(/,/g, ''));
                 }
 
                 const cost = sqft * 0.02;
-                const currentDate = 'December 13, 2025'; // Fixed current date
+                const currentDate = 'December 13, 2025';
 
-                // Use string concatenation to avoid any template literal issues
                 invoiceOutput.innerHTML = '<p><strong>Date:</strong> ' + currentDate + '</p>' +
                     '<p><strong>From:</strong> Your Company, 123 Construction Ln, Anytown, ST 12345 | contact@yourco.com | (555) 123-4567</p>' +
                     '<p><strong>To:</strong> Client LLC, 2326 Lone Oak Rd, Client City, ST 54321 | client@llc.com | (555) 987-6543</p>' +
@@ -85,13 +197,13 @@
                 { desc: 'I-Joists 11-7/8" deep', qty: 0, lf: 3570, unit: 'LF', notes: 'Floors ~1,190 LF/floor x 3' },
                 { desc: 'Beams (glulam/LVL)', qty: 0, lf: 120, unit: 'LF', notes: 'Supports from sections' },
                 { desc: 'Temporary Bracing/Strapping', qty: 0, lf: 200, unit: 'LF', notes: 'Wall erection' },
-                { desc: 'Strong-Tie Brackets/Hangers (various, e.g., H2.5A)', qty: 52, lf: 0, unit: 'each', notes: 'Truss/wall connections from details' }
+                { desc: 'Strong-Tie Brackets/Hangers (various)', qty: 52, lf: 0, unit: 'each', notes: 'Truss/wall connections' }
             );
 
             sections.Exterior.push(
                 { desc: 'OSB Sheathing 7/16"', qty: 5230, lf: 0, unit: 'SF', notes: 'Walls +10% waste' },
                 { desc: 'Fiber Cement Siding (James Hardie)', qty: 5230, lf: 0, unit: 'SF', notes: 'Elevations A201' },
-                { desc: 'Windows (various vinyl)', qty: 24, lf: 0, unit: 'each', notes: 'Schedule A501, sizes 3\'-0"x4\'-0" etc.' },
+                { desc: 'Windows (various vinyl)', qty: 24, lf: 0, unit: 'each', notes: 'Schedule A501' },
                 { desc: 'Exterior Doors 3\'-0" x 7\'-0" steel', qty: 8, lf: 0, unit: 'each', notes: 'Unit entries' },
                 { desc: 'Vapor Barrier/Ice & Water Shield', qty: 800, lf: 0, unit: 'SF', notes: 'Roof/eaves' }
             );
@@ -99,15 +211,14 @@
             sections.Interior.push(
                 { desc: '5/8" Drywall (Type X)', qty: 11888, lf: 0, unit: 'SF', notes: 'Walls/ceilings + waste' },
                 { desc: 'Subfloor 3/4" OSB', qty: 4755, lf: 0, unit: 'SF', notes: 'All floors' },
-                { desc: 'Stair Stringers 2x12, Treads/Risers', qty: 72, lf: 0, unit: 'each', notes: '2 stairs x 3 floors' },
-                { desc: 'Millwork Base/Trim 3-1/4"', qty: 0, lf: 1000, unit: 'LF', notes: 'Unit perimeters' },
+                { desc: 'Stair Stringers/Treads/Risers', qty: 72, lf: 0, unit: 'each', notes: '2 stairs x 3 floors' },
+                { desc: 'Millwork Base/Trim', qty: 0, lf: 1000, unit: 'LF', notes: 'Unit perimeters' },
                 { desc: 'Flooring (VCT/carpet)', qty: 4755, lf: 0, unit: 'SF', notes: 'Units' }
             );
 
             sections.Roofing.push(
-                { desc: 'Asphalt Shingles 30-yr architectural', qty: 1980, lf: 0, unit: 'SF', notes: 'Roof area + waste' },
-                { desc: 'Nails/Fasteners (16d galvanized)', qty: 500, lf: 0, unit: 'lbs', notes: 'Est. for shingles/sheathing' },
-                { desc: 'Brackets/Hangers', qty: 52, lf: 0, unit: 'each', notes: 'Truss connections' }
+                { desc: 'Asphalt Shingles 30-yr', qty: 1980, lf: 0, unit: 'SF', notes: 'Roof area + waste' },
+                { desc: 'Nails/Fasteners', qty: 500, lf: 0, unit: 'lbs', notes: 'Est.' }
             );
 
             return sections;
@@ -117,7 +228,7 @@
             let html = '<p><strong>Date:</strong> ' + date + '</p>' +
                 '<p><strong>From:</strong> Your Company, 123 Construction Ln, Anytown, ST 12345 | contact@yourco.com</p>' +
                 '<p><strong>To:</strong> Client LLC, 2326 Lone Oak Rd, Client City, ST 54321 | client@llc.com</p>' +
-                '<p><strong>Project Details:</strong> Lone Oak Multifamily Bldg 1 - 3-story, 8 units, ' + sqft.toLocaleString() + ' SF total conditioned area.</p>';
+                '<p><strong>Project Details:</strong> Lone Oak Multifamily Bldg 1 - 3-story, 8 units, ' + sqft.toLocaleString() + ' SF total.</p>';
 
             let grandQty = 0, grandLF = 0, grandSF = 0;
 
