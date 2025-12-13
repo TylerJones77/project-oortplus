@@ -1,180 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Construction Plan Processor</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Upgraded Dancing + Basketball Stick Figures */
-        body {
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
-            background: #f9f9f9; /* Light bg to make them pop */
-        }
+<style>
+    /* Epic Flaming Blue Sword Fight Stick Figures */
+    body {
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #111, #333); /* Dark arena vibe */
+    }
 
-        .stickman {
-            position: fixed;
-            bottom: 30px;
-            width: 120px; /* Bigger! */
-            height: 240px;
-            opacity: 0.6; /* More visible */
-            z-index: -1;
-        }
+    .swordfighter {
+        position: fixed;
+        bottom: 50px;
+        width: 150px; /* Even bigger for drama */
+        height: 300px;
+        opacity: 0.7;
+        z-index: -1;
+        animation: battle 8s infinite ease-in-out;
+    }
 
-        .stickman.left { left: 80px; animation: dance 4s infinite ease-in-out; }
-        .stickman.center { left: 50%; transform: translateX(-50%); bottom: 60px; animation: dunkJump 6s infinite ease-in-out; }
-        .stickman.right { right: 80px; animation: dance 4s infinite ease-in-out 1s; }
+    .swordfighter.left { left: 100px; animation-delay: 0s; transform: scaleX(-1); } /* Facing right */
+    .swordfighter.center { left: 50%; transform: translateX(-50%); animation-delay: 2s; }
+    .swordfighter.right { right: 100px; animation-delay: 4s; }
 
-        /* Basic stick figure */
-        .stickman::before { /* Head */
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 45px;
-            width: 30px;
-            height: 30px;
-            border: 6px solid #333;
-            border-radius: 50%;
-        }
+    /* Stick body */
+    .swordfighter::before { /* Head */
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 60px;
+        width: 30px;
+        height: 30px;
+        border: 6px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 10px red; /* Angry glow */
+    }
 
-        .stickman::after { /* Body */
-            content: '';
-            position: absolute;
-            top: 36px;
-            left: 57px;
-            width: 6px;
-            height: 100px;
-            background: #333;
-        }
+    .swordfighter::after { /* Body */
+        content: '';
+        position: absolute;
+        top: 36px;
+        left: 72px;
+        width: 6px;
+        height: 120px;
+        background: #fff;
+    }
 
-        .arm-left, .arm-right, .leg-left, .leg-right {
-            position: absolute;
-            width: 6px;
-            height: 80px;
-            background: #333;
-            transform-origin: top center;
-        }
+    /* Arms and legs */
+    .arm, .leg {
+        position: absolute;
+        width: 8px;
+        height: 100px;
+        background: #fff;
+        transform-origin: top center;
+    }
 
-        .arm-left { top: 40px; left: 40px; transform: rotate(40deg); animation: swingArm 2s infinite ease-in-out; }
-        .arm-right { top: 40px; left: 74px; transform: rotate(-40deg); animation: swingArm 2s infinite ease-in-out 0.5s; }
-        .leg-left { top: 130px; left: 50px; transform: rotate(-20deg); animation: swingLeg 2s infinite ease-in-out 1s; }
-        .leg-right { top: 130px; left: 64px; transform: rotate(20deg); animation: swingLeg 2s infinite ease-in-out 1.5s; }
+    .arm-left { top: 40px; left: 50px; animation: slash 2s infinite ease-in-out; }
+    .arm-right { top: 40px; left: 92px; animation: slash 2s infinite ease-in-out 0.5s; }
+    .leg-left { top: 150px; left: 64px; animation: kick 2s infinite ease-in-out 1s; }
+    .leg-right { top: 150px; left: 80px; animation: kick 2s infinite ease-in-out 1.5s; }
 
-        @keyframes swingArm {
-            0%, 100% { transform: rotate(40deg); }
-            50% { transform: rotate(-40deg); }
-        }
+    @keyframes slash {
+        0%, 100% { transform: rotate(45deg); }
+        50% { transform: rotate(-90deg); }
+    }
 
-        .arm-right { animation-direction: reverse; }
+    @keyframes kick {
+        0%, 100% { transform: rotate(-20deg); }
+        50% { transform: rotate(60deg); }
+    }
 
-        @keyframes swingLeg {
-            0%, 100% { transform: rotate(-20deg); }
-            50% { transform: rotate(30deg); }
-        }
+    /* Flaming Blue Swords (one per fighter, held in right arm) */
+    .sword {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        width: 12px;
+        height: 150px;
+        background: linear-gradient(to bottom, #00f, #0ff, #00f);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        box-shadow: 0 0 20px #0ff, 0 0 40px #00f, inset 0 0 10px #fff;
+        transform: rotate(-45deg);
+        animation: flame 0.5s infinite alternate, swingSword 2s infinite ease-in-out;
+    }
 
-        .leg-right { animation-direction: reverse; }
+    @keyframes flame {
+        0% { box-shadow: 0 0 20px #0ff, 0 0 40px #00f; }
+        100% { box-shadow: 0 0 30px #0ff, 0 0 60px #00f; }
+    }
 
-        @keyframes dance {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            25% { transform: translateY(-20px) rotate(8deg); }
-            50% { transform: translateY(15px) rotate(-8deg); }
-            75% { transform: translateY(-20px) rotate(8deg); }
-        }
+    @keyframes swingSword {
+        0%, 100% { transform: rotate(-45deg); }
+        50% { transform: rotate(-120deg); }
+    }
 
-        /* Basketball for center guy */
-        .basketball {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: orange;
-            border-radius: 50%;
-            top: 180px;
-            left: 60px;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
-            animation: dribble 1.5s infinite ease-in-out, bounceBall 6s infinite;
-        }
+    /* Gore effects - blood splatters during slashes */
+    .blood {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: radial-gradient(circle, red, darkred);
+        border-radius: 50%;
+        opacity: 0;
+        animation: splatter 2s infinite;
+    }
 
-        .basketball::before, .basketball::after {
-            content: '';
-            position: absolute;
-            background: #333;
-            width: 20px;
-            height: 3px;
-            top: 8px;
-            left: 0;
-        }
+    .blood1 { top: 100px; left: 80px; animation-delay: 0.5s; }
+    .blood2 { top: 120px; left: 100px; animation-delay: 1s; }
+    .blood3 { top: 140px; left: 60px; animation-delay: 1.5s; }
 
-        .basketball::after {
-            transform: rotate(90deg);
-        }
+    @keyframes splatter {
+        0% { opacity: 0; transform: scale(0); }
+        20% { opacity: 0.8; transform: scale(2); }
+        100% { opacity: 0; transform: scale(3); }
+    }
 
-        @keyframes dribble {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(40px); }
-        }
-
-        /* Dunk jump animation for center */
-        @keyframes dunkJump {
-            0% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-100px); } /* Jump high */
-            50% { transform: translateX(-50%) translateY(-120px) rotate(20deg); } /* Lean for dunk */
-            60% { transform: translateX(-50%) translateY(-80px); }
-            100% { transform: translateX(-50%) translateY(0); }
-        }
-
-        @keyframes bounceBall {
-            0% { top: 180px; left: 60px; }
-            40% { top: 100px; left: 60px; } /* Up with jump */
-            50% { top: 80px; left: 100px; } /* Dunk over right guy */
-            60% { top: 140px; left: 80px; }
-            100% { top: 180px; left: 60px; }
-        }
-    </style>
-</head>
-<body>
-    <!-- Upgraded stick figures -->
-    <div class="stickman left">
-        <div class="arm-left"></div>
-        <div class="arm-right"></div>
-        <div class="leg-left"></div>
-        <div class="leg-right"></div>
-    </div>
-
-    <!-- Center baller with basketball -->
-    <div class="stickman center">
-        <div class="arm-left"></div>
-        <div class="arm-right"></div>
-        <div class="leg-left"></div>
-        <div class="leg-right"></div>
-        <div class="basketball"></div>
-    </div>
-
-    <div class="stickman right">
-        <div class="arm-left"></div>
-        <div class="arm-right"></div>
-        <div class="leg-left"></div>
-        <div class="leg-right"></div>
-    </div>
-
-    <!-- Your app -->
-    <h1>Upload Structural Plan PDF</h1>
-    <input type="file" id="pdfUpload" accept=".pdf">
-    <button id="processBtn">Process PDF</button>
-    
-    <div id="output">
-        <h2>Invoice</h2>
-        <div id="invoiceOutput"></div>
-        
-        <h2>Material Takeoff</h2>
-        <div id="takeoffOutput"></div>
-    </div>
-    
-    <!-- Your existing script (unchanged) -->
-    <script type="module">
-        // ... (same as the last working version you had – the PDF processing code)
-        // Paste your full script type="module" code here from the previous response
-    </script>
-</body>
-</html>
+    @keyframes battle {
+        0%, 100% { transform: translateY(0) rotate(0); }
+        25% { transform: translateY(-30px) rotate(10deg); }
+        50% { transform: translateY(20px) rotate(-10deg); }
+        75% { transform: translateY(-30px) rotate(10deg); }
+    }
+</style>
