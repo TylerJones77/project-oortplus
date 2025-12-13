@@ -5,15 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construction Plan Processor</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Updated to latest stable pdf.js (v4.x) with explicit worker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.mjs" crossorigin="anonymous"></script>
-    <script>
-        // Set the worker to the matching CDN version
-        if (typeof pdfjsLib !== 'undefined') {
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.mjs';
-        }
-    </script>
+    <script src="pdf.min.js"></script> <!-- Local pdf.js -->
 </head>
 <body>
     <h1>Upload Structural Plan PDF</h1>
