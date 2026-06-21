@@ -1,189 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Professional Material Take-Off</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #f9f9f9; color: #333; }
-        h1, h2 { text-align: center; }
-        label { margin-top: 20px; font-weight: bold; display: block; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { padding: 16px; margin-top: 40px; background: #0066ff; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1.2em; }
-        .section { margin-top: 60px; border-top: 2px solid #ddd; padding-top: 40px; }
-        #output { margin-top: 30px; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-        th { background: #f0f0f0; }
-    </style>
-    <script src="https://unpkg.com/tesseract.js@v5.1.0/dist/tesseract.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>media.by_mia | Utah Photography</title>
+<meta name="description" content="media.by_mia — fine art photography across Utah. Portraits, weddings, engagements, and more. Book your session today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Request Professional Material Take-Off</h1>
-    <p>Submit your structural plans PDF, and we'll perform a comprehensive take-off and email it back. For high-volume bidding (up to 500,000 sq ft/day), expect processing within 24 hours.</p>
 
-    <form action="https://formsubmit.co/(............)" method="POST" enctype="multipart/form-data" target="_blank">
-        <input type="hidden" name="_subject" value="New Take-Off Request - PDF Attached">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_autoresponse" value="Thank you! We've received your plans and will send the professional take-off within 24 hours.">
-        <input type="hidden" name="_template" value="table">
+<div class="grain"></div>
 
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
+<header class="site-header" id="top">
+  <nav class="navbar">
+    <a class="brand" href="#top">media.by_<span>mia</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#gallery">Showcase</a></li>
+      <li><a href="#sessions">Sessions</a></li>
+      <li><a href="#book">Book a Shoot</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required>
+  <div class="hero">
+    <p class="hero-eyebrow">Utah-Based Photography Studio</p>
+    <h1>Light, Landscape <br>&amp; Story.</h1>
+    <p class="hero-sub">Fine-art portrait, wedding &amp; lifestyle photography across the mountains, deserts and salt flats of Utah.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn btn-primary">Book a Shoot</a>
+      <a href="#gallery" class="btn btn-ghost">View the Showcase</a>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</header>
 
-        <label for="phone">Your Phone (optional):</label>
-        <input type="tel" id="phone" name="phone">
+<!-- SHOWCASE / GALLERY -->
+<section id="gallery" class="section gallery-section">
+  <div class="section-head">
+    <p class="section-eyebrow">The Showcase Room</p>
+    <h2>A Glimpse Into the Work</h2>
+    <p class="section-sub">A curated collection across portraits, weddings, and the Utah landscape. <em>(Placeholder frames — swap in Mia's photos any time.)</em></p>
+  </div>
 
-        <label for="project">Project Description (optional):</label>
-        <textarea id="project" name="project" rows="4"></textarea>
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="portrait">Portrait</button>
+    <button class="filter-btn" data-filter="wedding">Wedding</button>
+    <button class="filter-btn" data-filter="family">Family</button>
+    <button class="filter-btn" data-filter="landscape">Landscape</button>
+  </div>
 
-        <label for="plans">Upload Structural Plans (PDF):</label>
-        <input type="file" id="plans" name="attachment" accept=".pdf" required>
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- generated by JS -->
+  </div>
+</section>
 
-        <button type="submit">Submit Plans</button>
-    </form>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <div class="lightbox-frame" id="lightboxFrame"></div>
+</div>
 
-    <div class="section">
-        <h2>Instant Preview</h2>
-        <p>Upload your PDF for an immediate semi-accurate invoice and take-off (uses OCR to read the plans).</p>
-        <input type="file" id="pdfUpload" accept=".pdf">
-        <button id="processBtn">Process PDF</button>
-        <div id="output"></div>
+<!-- SESSION TYPES -->
+<section id="sessions" class="section sessions-section">
+  <div class="section-head">
+    <p class="section-eyebrow">Session Types</p>
+    <h2>Find Your Story</h2>
+    <p class="section-sub">Every session is tailored — choose a starting point below, then customize it in the booking form.</p>
+  </div>
+
+  <div class="session-grid">
+    <div class="session-card">
+      <span class="session-icon">&#9825;</span>
+      <h3>Portrait</h3>
+      <p>Individual, senior, or branding portraits with editorial light.</p>
+    </div>
+    <div class="session-card">
+      <span class="session-icon">&#10047;</span>
+      <h3>Wedding</h3>
+      <p>Full-day coverage, elopements, and intimate ceremonies.</p>
+    </div>
+    <div class="session-card">
+      <span class="session-icon">&#9826;</span>
+      <h3>Engagement</h3>
+      <p>Romantic sessions in the canyons, salt flats, or city streets.</p>
+    </div>
+    <div class="session-card">
+      <span class="session-icon">&#8225;</span>
+      <h3>Family</h3>
+      <p>Generational portraits with a timeless, candid feel.</p>
+    </div>
+    <div class="session-card">
+      <span class="session-icon">&#10052;</span>
+      <h3>Maternity &amp; Newborn</h3>
+      <p>Soft, intentional sessions for life's newest chapter.</p>
+    </div>
+    <div class="session-card">
+      <span class="session-icon">&#9670;</span>
+      <h3>Event &amp; Commercial</h3>
+      <p>Brand shoots, products, and milestone celebrations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="book" class="section booking-section">
+  <div class="section-head">
+    <p class="section-eyebrow">Reserve Your Date</p>
+    <h2>Book a Shoot</h2>
+    <p class="section-sub">Tell me about your vision, pick a Utah location, and I'll follow up within 48 hours to confirm details.</p>
+  </div>
+
+  <form class="booking-form" id="bookingForm" action="https://formsubmit.co/REPLACE_WITH_MIAS_EMAIL@example.com" method="POST">
+    <input type="hidden" name="_subject" value="New Booking Request — media.by_mia">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="#book">
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="Name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="Email" required>
+      </div>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="Phone">
+      </div>
+      <div class="field">
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="Preferred Date">
+      </div>
+
+      <div class="field">
+        <label for="shootType">Type of Shoot</label>
+        <select id="shootType" name="Shoot Type" required>
+          <option value="" disabled selected>Select a session type</option>
+          <option>Portrait</option>
+          <option>Wedding</option>
+          <option>Engagement</option>
+          <option>Family</option>
+          <option>Senior / Graduation</option>
+          <option>Maternity</option>
+          <option>Newborn</option>
+          <option>Event</option>
+          <option>Commercial / Branding</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="duration">Session Length</label>
+        <select id="duration" name="Session Length">
+          <option>30 Minutes — Mini Session</option>
+          <option selected>1 Hour — Standard</option>
+          <option>2 Hours — Extended</option>
+          <option>Full Day — Wedding / Event</option>
+        </select>
+      </div>
+
+      <div class="field span-2">
+        <label for="locationPreset">Utah Location</label>
+        <select id="locationPreset" name="Location Preset">
+          <option value="">Let Mia recommend a spot</option>
+          <option>Salt Lake City — Urban &amp; Capitol</option>
+          <option>Park City — Mountain Town</option>
+          <option>Provo / Bridal Veil Falls</option>
+          <option>Moab — Arches &amp; Canyonlands</option>
+          <option>Zion National Park</option>
+          <option>Bryce Canyon</option>
+          <option>Bonneville Salt Flats</option>
+          <option>Antelope Island</option>
+          <option>Snowbird / Alta</option>
+          <option>Capitol Reef</option>
+          <option>Other — specify below</option>
+        </select>
+      </div>
+
+      <div class="field span-2">
+        <label for="locationCustom">Specific Location / City (optional)</label>
+        <input type="text" id="locationCustom" name="Specific Location" placeholder="e.g. Sundance Resort, near Heber City">
+      </div>
+
+      <div class="field span-2">
+        <label for="message">Your Vision</label>
+        <textarea id="message" name="Message" rows="4" placeholder="Tell me about the people, the mood, and any inspiration you have in mind..."></textarea>
+      </div>
     </div>
 
-    <script type="module">
-        import * as pdfjsLib from './pdf.min.js';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.min.js';
+    <button type="submit" class="btn btn-primary btn-block">Request This Date</button>
+    <p class="form-note">By submitting, you'll receive a confirmation email and Mia will reach out to finalize your session.</p>
+  </form>
+</section>
 
-        const processBtn = document.getElementById('processBtn');
-        const pdfUpload = document.getElementById('pdfUpload');
-        const output = document.getElementById('output');
+<!-- ABOUT -->
+<section id="about" class="section about-section">
+  <div class="about-grid">
+    <div class="about-portrait" aria-hidden="true"></div>
+    <div class="about-copy">
+      <p class="section-eyebrow">About Mia</p>
+      <h2>Telling Utah's Stories, One Frame at a Time</h2>
+      <p>media.by_mia is a Utah-based photography studio specializing in portrait, wedding, and lifestyle imagery. From the red rock of Moab to the snow-capped peaks of the Wasatch Range, every session is shaped by the landscape and the people in front of the lens.</p>
+      <p>Every shoot is collaborative — we'll talk through your vision, choose the perfect Utah backdrop, and create images you'll treasure for a lifetime.</p>
+      <ul class="about-stats">
+        <li><strong>150+</strong><span>Sessions Shot</span></li>
+        <li><strong>29</strong><span>Counties Covered</span></li>
+        <li><strong>5.0</strong><span>Average Rating</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        processBtn.addEventListener('click', async () => {
-            const file = pdfUpload.files[0];
-            if (!file) {
-                alert('Please upload a PDF.');
-                return;
-            }
+<!-- CONTACT / FOOTER -->
+<footer id="contact" class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <p class="brand footer-brand">media.by_<span>mia</span></p>
+      <p>Utah Photography Studio</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>hello@mediabymia.com</p>
+      <p>Based in Salt Lake City, UT</p>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <p><a href="#" target="_blank" rel="noopener">Instagram</a></p>
+      <p><a href="#" target="_blank" rel="noopener">Pinterest</a></p>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; <span id="year"></span> media.by_mia. All rights reserved.</p>
+</footer>
 
-            output.innerHTML = '<p>Processing...</p>';
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-
-                let fullText = '';
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    let text = '';
-                    const textContent = await page.getTextContent();
-                    text = textContent.items.map(item => item.str).join(' ');
-                    if (!text.trim()) {
-                        text = await ocrPage(page);
-                    }
-                    fullText += text + '\n';
-                }
-
-                // Parse sqft from text
-                let sqft = parseSqft(fullText) || 4755; // fallback if not found
-                const cost = sqft * 0.02;
-                const date = new Date().toLocaleDateString();
-
-                output.innerHTML = getInvoiceHTML(sqft, cost, date) + getTakeoffHTML(fullText, sqft, date);
-            } catch (e) {
-                output.innerHTML = '<p style="color:red;">Error: ' + e.message + '</p>';
-            }
-        });
-
-        async function ocrPage(page) {
-            const viewport = page.getViewport({ scale: 2 });
-            const canvas = document.createElement('canvas');
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-            const result = await Tesseract.recognize(canvas.toDataURL(), 'eng');
-            return result.data.text;
-        }
-
-        function parseSqft(text) {
-            const match = text.match(/(\d+(?:,\d+)?)\s*(SF|sq\s*ft|square\s*feet)/i);
-            if (match) return parseFloat(match[1].replace(',', ''));
-            return null;
-        }
-
-        function getInvoiceHTML(sqft, cost, date) {
-            return '<h3>Invoice</h3>' +
-                '<p><strong>Date:</strong> ' + date + '</p>' +
-                '<p><strong>From:</strong> Your Company, 123 Construction Ln, Anytown, ST 12345 | contact@yourco.com | (555) 123-4567</p>' +
-                '<p><strong>To:</strong> Client LLC, 2326 Lone Oak Rd, Client City, ST 54321 | client@llc.com | (555) 987-6543</p>' +
-                '<p><strong>Project Sq Ft:</strong> ' + sqft.toLocaleString() + ' SF</p>' +
-                '<p><strong>Rate:</strong> $0.02 per SF</p>' +
-                '<p><strong>Subtotal:</strong> $' + cost.toFixed(2) + '</p>' +
-                '<p><strong>Total Due:</strong> $' + cost.toFixed(2) + '</p>' +
-                '<p><strong>Calculation:</strong> ' + sqft.toLocaleString() + ' SF × $0.02/SF = $' + cost.toFixed(2) + '</p>' +
-                '<p><strong>Payment Terms:</strong> Net 30 days. Late fees 1.5% per month. Thank you!</p>' +
-                '<p><strong>Notes:</strong> Based on uploaded plans. For full custom, use submit form.</p>';
-        }
-
-        function getTakeoffHTML(text, sqft, date) {
-            const sections = parseMaterials(text); // Parse from text
-
-            let html = '<h3>Material Take-Off</h3>' +
-                '<p><strong>Date:</strong> ' + date + '</p>' +
-                '<p><strong>Project:</strong> Multifamily Bldg - 3-story, 8 units, ' + sqft.toLocaleString() + ' SF</p>';
-
-            let grandQty = 0, grandLF = 0, grandSF = 0;
-
-            for (let section in sections) {
-                html += '<h4>' + section + '</h4><table><thead><tr><th>Description</th><th>Quantity</th><th>Linear Ft</th><th>Sq Ft</th><th>Unit</th><th>Notes</th></tr></thead><tbody>';
-                let subQty = 0, subLF = 0, subSF = 0;
-                sections[section].forEach(item => {
-                    const sf = item.unit === 'SF' ? item.qty : 0;
-                    const lf = item.unit === 'LF' ? item.qty : 0;
-                    html += '<tr><td>' + item.desc + '</td><td>' + (item.qty || '') + '</td><td>' + lf + '</td><td>' + sf + '</td><td>' + item.unit + '</td><td>' + item.notes + '</td></tr>';
-                    subQty += item.qty || 0;
-                    subLF += lf;
-                    subSF += sf;
-                });
-                html += '<tfoot><tr><td><strong>Subtotal</strong></td><td>' + subQty + '</td><td>' + subLF + '</td><td>' + subSF + '</td><td></td><td></td></tr></tfoot></table>';
-                grandQty += subQty; grandLF += subLF; grandSF += subSF;
-            }
-
-            html += '<h4>Grand Totals</h4><p>Quantity: ' + grandQty + ' | Linear Ft: ' + grandLF + ' | Sq Ft: ' + grandSF + '</p>';
-
-            return html;
-        }
-
-        function parseMaterials(text) {
-            const sections = { Framing: [], Exterior: [], Interior: [], Roofing: [] };
-
-            // Parse from text for semi-accuracy
-            const studsMatch = text.match(/studs? (\d+)/i);
-            if (studsMatch) sections.Framing.push({ desc: 'Studs', qty: parseInt(studsMatch[1]), unit: 'each', notes: 'From plans' });
-
-            // Add more parsers for headers, doors, windows, etc.
-            const doorsMatch = text.match(/doors? (\d+)/i);
-            if (doorsMatch) sections.Exterior.push({ desc: 'Doors', qty: parseInt(doorsMatch[1]), unit: 'each', notes: 'From plans' });
-
-            const windowsMatch = text.match(/windows? (\d+)/i);
-            if (windowsMatch) sections.Exterior.push({ desc: 'Windows', qty: parseInt(windowsMatch[1]), unit: 'each', notes: 'From plans' });
-
-            const roofingMatch = text.match(/roofing (\d+)/i);
-            if (roofingMatch) sections.Roofing.push({ desc: 'Roofing Materials', qty: parseInt(roofingMatch[1]), unit: 'SF', notes: 'From plans' });
-
-            // Fallback if not found
-            if (sections.Framing.length === 0) {
-                sections.Framing.push({ desc: '2x6 Wood Studs @16" O.C.', qty: 580, unit: 'each', notes: 'Estimated' });
-                // Add more fallback items as before
-            }
-
-            // ... Add similar for other sections
-
-            return sections;
-        }
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
